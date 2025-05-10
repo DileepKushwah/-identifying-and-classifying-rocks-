@@ -6,7 +6,7 @@ Here is two model
 click this link to download dataset of multiclassification dataset from kaggle 
 https://www.kaggle.com/datasets/asiedubrempong/minerals-identification-dataset
 
-2.image detection model yelov8.s using image detection dataset from roboflow yelov8.s 
+2.image detection model yolov8.s using image detection dataset from roboflow yolov8.s 
 click here to download data from robloflow
 https://universe.roboflow.com/finalproject-flqsu/mineral_ore_detection/dataset/2/download
 
