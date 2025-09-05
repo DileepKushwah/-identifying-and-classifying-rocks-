@@ -5,6 +5,8 @@ from ultralytics import YOLO
 from PIL import Image
 import tempfile
 import io
+import numpy as np
+import cv2
 
 # -----------------
 # Page config
@@ -120,10 +122,13 @@ if uploaded_file is not None:
     temp_file.write(uploaded_file.read())
     img_path = temp_file.name
 
-    # Run YOLO detection
+        # Run YOLO detection
     with st.spinner("🔎 Detecting minerals..."):
-        results = model(img_path, conf=0.25)
+        import cv2
+        img_np = cv2.imread(img_path)  # Load as numpy array
+        results = model.predict(img_np, conf=0.25)
         annotated_img = results[0].plot()
+
 
     # Show Uploaded & Detection Results
     col1, col2 = st.columns(2)
@@ -155,3 +160,4 @@ if uploaded_file is not None:
     buf.seek(0)
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
+
