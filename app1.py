@@ -5,6 +5,7 @@ from ultralytics import YOLO
 from PIL import Image
 import tempfile
 import io
+import cv2
 
 # -----------------
 # Page config
@@ -177,3 +178,4 @@ with st.expander("📘 About Project & Training Details"):
     - augmentations: mosaic, mixup, hsv, rotate, translate, scale
     **Evaluation**: Precision, Recall, mAP@50, mAP@50-95, confusion matrix, training curves.
     """)
+
