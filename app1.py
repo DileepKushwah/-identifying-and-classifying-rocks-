@@ -6,7 +6,8 @@ from PIL import Image
 import tempfile
 import io
 
-# -----------------
+
+"""# -----------------
 # App Configuration
 # -----------------
 st.set_page_config(
@@ -24,7 +25,58 @@ def load_model():
     return YOLO(MODEL_PATH)
 
 with st.spinner("🧠 Loading YOLOv8 model..."):
-    model = load_model()
+    model = load_model()"""
+# -----------------
+# Page config
+# -----------------
+st.set_page_config(page_title="Mineral Detection System", page_icon="🪨", layout="wide")
+
+# -----------------
+# Model download config (Google Drive)
+# -----------------
+MODEL_PATH = "best.pt"
+# Your Google Drive file id (from the shared link)
+GDRIVE_FILE_ID = "1bArWKdAZt6xHJUSnpLAHZ2IFPzrUz-8J"
+GDRIVE_URL = f"https://drive.google.com/uc?id={GDRIVE_FILE_ID}"
+
+def download_model_from_gdrive(url: str, target_path: str) -> bool:
+    """Download using gdown. Returns True if success."""
+    try:
+        import gdown
+    except Exception as e:
+        st.error("gdown is not installed. Add 'gdown' to requirements.txt.")
+        return False
+
+    try:
+        # gdown will handle large file download from Google Drive
+        gdown.download(url, target_path, quiet=False)
+        return os.path.exists(target_path)
+    except Exception as e:
+        st.error(f"Model download error: {e}")
+        return False
+
+# -----------------
+# Ensure model exists (download if missing)
+# -----------------
+if not os.path.exists(MODEL_PATH):
+    with st.spinner("📥 Model not found locally — downloading from Google Drive..."):
+        ok = download_model_from_gdrive(GDRIVE_URL, MODEL_PATH)
+    if ok:
+        st.success("✅ Model downloaded successfully.")
+    else:
+        st.error("❌ Failed to download model. Check drive sharing settings and file id.")
+        st.stop()
+
+# -----------------
+# Load model and cache it so reloads are fast
+# -----------------
+@st.cache_resource
+def load_yolo_model(path: str):
+    return YOLO(path)
+
+with st.spinner("🧠 Loading model (this may take a while on first run)..."):
+    model = load_yolo_model(MODEL_PATH)
+
 
 # -----------------
 # Sidebar Info
@@ -126,5 +178,6 @@ if uploaded_file is not None:
     buf.seek(0)
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
+
 
 
