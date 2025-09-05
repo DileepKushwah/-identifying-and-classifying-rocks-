@@ -1,7 +1,8 @@
 streamlit==1.49.1
 ultralytics==8.3.193
-torch==2.2.2
-torchvision==0.17.2
+torch==2.8.0
+torchvision==0.23.0
 opencv-python-headless==4.10.0.84
 pillow
 gdown
+
