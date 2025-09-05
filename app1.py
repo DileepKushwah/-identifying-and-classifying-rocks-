@@ -6,6 +6,11 @@ from PIL import Image
 import tempfile
 import io
 import cv2
+import os
+os.environ["OPENCV_VIDEOIO_PRIORITY_MSMF"] = "0"  # avoid video backend errors
+
+import cv2  # test import early
+print("✅ OpenCV version:", cv2.__version__)
 
 # -----------------
 # Page config
@@ -178,4 +183,5 @@ with st.expander("📘 About Project & Training Details"):
     - augmentations: mosaic, mixup, hsv, rotate, translate, scale
     **Evaluation**: Precision, Recall, mAP@50, mAP@50-95, confusion matrix, training curves.
     """)
+
 
