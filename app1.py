@@ -31,7 +31,7 @@ with st.spinner("🧠 Loading YOLOv8 model..."):
 # -----------------
 st.sidebar.title("📘 About Us")
 st.sidebar.markdown("""
-**Dataset**  
+ 
 - Custom mineral dataset (Roboflow) with 4 classes:  
   🟤 **Baryte (BaSO₄)**  
   ⚪ **Calcite (CaCO₃)**  
@@ -127,24 +127,4 @@ if uploaded_file is not None:
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
 
-# -----------------
-# Expandable Project Details
-# -----------------
-with st.expander("📘 About Project & Training Details"):
-    st.markdown("""
-    ### 🛠 Training Setup  
-    - **Model**: YOLOv8m (pretrained on COCO, fine-tuned on custom dataset)  
-    - **Epochs**: 50–200  
-    - **Image size**: 640×640  
-    - **Batch size**: 32  
-    - **Optimizer**: AdamW  
-    - **Learning rate**: 0.001 → cosine decay (lrf=0.1)  
-    - **Augmentations**: Mosaic, Mixup, HSV shift, rotation, scaling  
 
-    ### 📊 Evaluation Metrics  
-    - Precision / Recall  
-    - mAP@50 and mAP@50-95  
-    - Confusion matrix & training curves  
-
-    ✅ The exported `best.pt` is used for real-time inference in this app.
-    """)
