@@ -114,23 +114,26 @@ mineral_info = {
 # -----------------
 uploaded_file = st.file_uploader("📤 Upload a mineral image", type=["jpg", "jpeg", "png"])
 
+import cv2
+import numpy as np
+
 if uploaded_file is not None:
-    # Save uploaded file
-    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".jpg")
-    temp_file.write(uploaded_file.read())
-    img_path = temp_file.name
+    # Convert uploaded file → bytes → numpy array
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    img_np = cv2.imdecode(file_bytes, 1)  # Decode as BGR image
 
     # Run YOLO detection
     with st.spinner("🔎 Detecting minerals..."):
-        results = model(img_path, conf=0.25)
+        results = model.predict(img_np, conf=0.25)
         annotated_img = results[0].plot()
 
     # Show Uploaded & Detection Results
     col1, col2 = st.columns(2)
     with col1:
-        st.image(img_path, caption="📷 Uploaded Image", use_container_width=True)
+        st.image(img_np[..., ::-1], caption="📷 Uploaded Image", use_container_width=True)  # convert BGR→RGB
     with col2:
         st.image(annotated_img, caption="✅ Detection Results", use_container_width=True)
+
 
     # Show Detected Minerals
     detected_classes = results[0].boxes.cls.cpu().numpy()
@@ -155,3 +158,4 @@ if uploaded_file is not None:
     buf.seek(0)
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
+
