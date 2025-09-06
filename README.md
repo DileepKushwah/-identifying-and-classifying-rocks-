@@ -1,3 +1,5 @@
+click this link and test this app
+https://mineral-detection.streamlit.app/
 # -identifying-and-classifying-rocks-
  identifying and classifying rocks by determining  their mineral composition
 
