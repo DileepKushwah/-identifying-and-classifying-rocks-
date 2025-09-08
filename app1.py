@@ -1,10 +1,14 @@
 # app.py
 import os
+os.environ["OPENCV_VIDEOIO_PRIORITY_MSMF"] = "0"
+
 import streamlit as st
-from ultralytics import YOLO
+from ultralytics.models.yolo import YOLO
 from PIL import Image
 import tempfile
 import io
+import cv2
+import numpy as np
 
 # -----------------
 # Page config
@@ -158,4 +162,5 @@ if uploaded_file is not None:
     buf.seek(0)
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
+
 
