@@ -1,6 +1,9 @@
 # app.py
 import os
+
 os.environ["OPENCV_VIDEOIO_PRIORITY_MSMF"] = "0"
+os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
+
 
 import streamlit as st
 from ultralytics.models.yolo import YOLO
@@ -162,5 +165,6 @@ if uploaded_file is not None:
     buf.seek(0)
     st.download_button("⬇️ Download annotated image", data=buf,
                        file_name="detection.jpg", mime="image/jpeg")
+
 
 
