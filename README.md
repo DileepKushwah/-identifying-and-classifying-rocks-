@@ -87,5 +87,17 @@ Precision improves steadily and stabilizes around 0.75–0.78.
 Recall improves gradually, stabilizing around 0.70–0.75.
 
 mAP@50 reaches ~0.80, and mAP@50-95 around 0.63–0.65, which is decent performance.
+
+
+
+
+# Identifying and Classifying Rocks
+
+This project identifies and classifies different types of rocks
+using computer vision and machine learning.
+
+## Developer Setup
+
+This project can be run locally for development and testing.
  
  
